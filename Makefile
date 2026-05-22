@@ -33,6 +33,15 @@ flexSim.Rout: bintr/flexSim.R
 fit.Rout: fit.R clean.rds flexSim.rda
 	$(pipeR)
 
+fit_death.Rout: fit_death.R clean.rds flexSim.rda
+	$(pipeR)
+
+tidyfit.Rout: tidyfit.R fit.rds flexSim.rda
+	$(pipeR)
+
+fitplot.Rout: fitplot.R tidyfit.rds
+	$(pipeR)
+
 ## ln -s ../makestuff . ## Do this first if you want a linked makestuff
 Makefile: makestuff/00.stamp
 makestuff/%.stamp: | makestuff
