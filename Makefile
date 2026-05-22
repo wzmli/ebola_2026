@@ -1,7 +1,5 @@
 ## This is ebola_2026
 
-## This section is for Dushoff-style vim-setup and vim targeting
-## You can delete it if you don't want it
 current: target
 -include target.mk
 Ignore = target.mk
@@ -18,8 +16,16 @@ Sources += Makefile $(wildcard *.R) data.csv
 Ignore += makestuff
 msrepo = https://github.com/dushoff
 
-bintr_repo: 
-	git clone https://github.com/wzmli/bintr.git
+######################################################################
+
+alldirs += bintr
+bintr/%: | bintr ;
+Ignore  += $(alldirs)
+
+bintr: 
+	git clone https://github.com/wzmli/bintr
+
+######################################################################
 
 read.Rout: read.R data.csv
 	$(pipeR)
@@ -41,6 +47,7 @@ tidyfit.Rout: tidyfit.R fit.rds flexSim.rda
 
 fitplot.Rout: fitplot.R tidyfit.rds
 	$(pipeR)
+######################################################################
 
 ## ln -s ../makestuff . ## Do this first if you want a linked makestuff
 Makefile: makestuff/00.stamp
