@@ -29,7 +29,6 @@ print(m)
 
 print(summary(m))
 
-fitlist <- list(mod=m, dat=fitdf)
-rdsSave(fitlist)
+rdsSave(m)
 
 ## Do I do the same for death?

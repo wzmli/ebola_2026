@@ -29,3 +29,4 @@ print(m)
 
 print(summary(m))
 
+rdsSave(m)

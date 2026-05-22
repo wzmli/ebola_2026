@@ -27,6 +27,8 @@ bintr:
 
 ######################################################################
 
+## data2.csv
+
 read.Rout: read.R data.csv
 	$(pipeR)
 
@@ -34,6 +36,9 @@ clean.Rout: clean.R read.rds
 	$(pipeR)
 
 flexSim.Rout: bintr/flexSim.R
+	$(pipeR)
+
+expfit.Rout: expfit.R clean.rds
 	$(pipeR)
 
 fit.Rout: fit.R clean.rds flexSim.rda
@@ -47,6 +52,12 @@ tidyfit.Rout: tidyfit.R fit.rds flexSim.rda
 
 fitplot.Rout: fitplot.R tidyfit.rds
 	$(pipeR)
+
+rplot.Rout: rplot.R expfit.rds fit.rds fit_death.rds
+	$(pipeR)
+
+
+
 ######################################################################
 
 ## ln -s ../makestuff . ## Do this first if you want a linked makestuff
