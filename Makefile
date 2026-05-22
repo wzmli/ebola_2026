@@ -16,10 +16,16 @@ Sources += Makefile $(wildcard *.R) data.csv
 Ignore += makestuff
 msrepo = https://github.com/dushoff
 
+######################################################################
+
+alldirs += bintr
 bintr/%: | bintr ;
+Ignore  += $(alldirs)
 
 bintr: 
 	git clone https://github.com/wzmli/bintr
+
+######################################################################
 
 read.Rout: read.R data.csv
 	$(pipeR)
