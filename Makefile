@@ -56,6 +56,8 @@ fitplot.Rout: fitplot.R tidyfit.rds
 rplot.Rout: rplot.R expfit.rds fit.rds fit_death.rds
 	$(pipeR)
 
+cumplot.Rout: cumplot.R rplot.rds clean.rds
+	$(pipeR)
 
 
 ######################################################################

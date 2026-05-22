@@ -32,3 +32,5 @@ gg <- (ggplot(dat, aes(type,y=r))
 )
 
 print(gg)
+
+rdsSave(dat)
