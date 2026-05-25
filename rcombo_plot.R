@@ -26,9 +26,9 @@ gg <- (ggplot(filter(combodf,type == "bintr_cases"), aes(x=start_date,y=r))
 	+ ylab("Growth Rate (per day)")
 	+ geom_hline(aes(yintercept=0.053))
 	+ geom_hline(aes(yintercept=0.085))
+	+ geom_hline(aes(yintercept=0.1),color="red")
+	+ geom_hline(aes(yintercept=0.22),color="red")
 )
 
 print(gg)
-
-
 
