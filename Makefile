@@ -59,6 +59,20 @@ rplot.Rout: rplot.R expfit.rds fit.rds fit_death.rds
 cumplot.Rout: cumplot.R rplot.rds clean.rds
 	$(pipeR)
 
+phylo_dates.Rout: phylo_dates.R read.rds 
+	$(pipeR)
+
+phylo_dates2.Rout: phylo_dates2.R read.rds 
+	$(pipeR)
+
+phylo_fit.Rout: fit.R phylo_dates.rds flexSim.rda
+	$(pipeR)
+
+phylo_fit2.Rout: fit.R phylo_dates2.rds flexSim.rda
+	$(pipeR)
+
+rcombo_plot.Rout: rcombo_plot.R phylo_fit.rds phylo_fit2.rds rplot.rds
+	$(pipeR)
 
 ######################################################################
 
