@@ -1,6 +1,7 @@
 library(tidyverse);theme_set(theme_bw())
 library(bbmle)
 library(shellpipes)
+startGraphics(width=4,height=3)
 
 d1 <- rdsRead("phylo_fit.rds")
 d2 <- rdsRead("phylo_fit2.rds")
@@ -24,10 +25,24 @@ gg <- (ggplot(filter(combodf,type == "bintr_cases"), aes(x=start_date,y=r))
 	+ geom_point()
 	+ geom_pointrange(aes(ymin=r - 1.96*sde, ymax=r + 1.96*sde))
 	+ ylab("Growth Rate (per day)")
-	+ geom_hline(aes(yintercept=0.053))
-	+ geom_hline(aes(yintercept=0.085))
-	+ geom_hline(aes(yintercept=0.1),color="red")
-	+ geom_hline(aes(yintercept=0.22),color="red")
+#	+ geom_hline(aes(yintercept=0.053))
+#	+ geom_hline(aes(yintercept=0.085))
+#	+ geom_hline(aes(yintercept=0.1),color="red")
+#	+ geom_hline(aes(yintercept=0.22),color="red")
+	+ geom_rect(xmin = as.Date("2026-03-15")
+		,xmax=as.Date("2026-05-01")
+		,ymin=0.053
+		,ymax=0.085
+		, alpha=0.1
+		)
+	+ geom_rect(xmin = as.Date("2026-03-15")
+		,xmax=as.Date("2026-05-01")
+		,ymin=0.1
+		,ymax=0.22
+		, alpha=0.1
+		, fill="red"
+	)
+
 )
 
 print(gg)
