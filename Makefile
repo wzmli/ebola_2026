@@ -74,6 +74,9 @@ phylo_fit2.Rout: fit.R phylo_dates2.rds flexSim.rda
 rcombo_plot.Rout: rcombo_plot.R phylo_fit.rds phylo_fit2.rds rplot.rds
 	$(pipeR)
 
+project.Rout: project.R rcombo_plot.rds phylo_dates.rds
+	$(pipeR)
+
 ######################################################################
 
 ## ln -s ../makestuff . ## Do this first if you want a linked makestuff

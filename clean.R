@@ -16,7 +16,7 @@ longdat <- (incdat
 	|> pivot_longer(!date, names_to ="type", values_to="value")
 )
 
-(ggplot(longdat, aes(date,value))
+print(ggplot(longdat, aes(date,value))
 	+ geom_point()
 	+ facet_wrap(~type,scale="free")
 )

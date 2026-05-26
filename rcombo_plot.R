@@ -47,3 +47,4 @@ gg <- (ggplot(filter(combodf,type == "bintr_cases"), aes(x=start_date,y=r))
 
 print(gg)
 
+rdsSave(combodf)
