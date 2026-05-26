@@ -18,8 +18,6 @@ longdat <- (incdat
 
 print(longdat)
 
-print(ggplot())
-
 print(gg <- ggplot(longdat, aes(date,value))
 	+ geom_point()
 	+ geom_line()

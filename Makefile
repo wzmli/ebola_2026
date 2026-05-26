@@ -28,8 +28,12 @@ bintr:
 ######################################################################
 
 ## data2.csv
+## data.csv
+## who.csv
+## who2.csv
+## who3.csv
 
-read.Rout: read.R data.csv
+read.Rout: read.R who3.csv
 	$(pipeR)
 
 clean.Rout: clean.R read.rds
@@ -47,7 +51,7 @@ fit.Rout: fit.R clean.rds flexSim.rda
 fit_death.Rout: fit_death.R clean.rds flexSim.rda
 	$(pipeR)
 
-tidyfit.Rout: tidyfit.R fit.rds flexSim.rda
+tidyfit.Rout: tidyfit.R fit.rds flexSim.rda clean.rds
 	$(pipeR)
 
 fitplot.Rout: fitplot.R tidyfit.rds
@@ -59,16 +63,22 @@ rplot.Rout: rplot.R expfit.rds fit.rds fit_death.rds
 cumplot.Rout: cumplot.R rplot.rds clean.rds
 	$(pipeR)
 
-phylo_dates.Rout: phylo_dates.R read.rds 
+phylo_clean.Rout: phylo_clean.R read.rds 
 	$(pipeR)
 
-phylo_dates2.Rout: phylo_dates2.R read.rds 
+phylo_clean2.Rout: phylo_clean2.R read.rds 
 	$(pipeR)
 
-phylo_fit.Rout: fit.R phylo_dates.rds flexSim.rda
+phylo_fit.Rout: fit.R phylo_clean.rds flexSim.rda
 	$(pipeR)
 
-phylo_fit2.Rout: fit.R phylo_dates2.rds flexSim.rda
+phyloplot.Rout: tidyfit.R phylo_fit.rds flexSim.rda phylo_clean.rds
+	$(pipeR)
+
+phylo_fit2.Rout: fit.R phylo_clean2.rds flexSim.rda
+	$(pipeR)
+
+phyloplot2.Rout: tidyfit.R phylo_fit2.rds flexSim.rda phylo_clean2.rds
 	$(pipeR)
 
 rcombo_plot.Rout: rcombo_plot.R phylo_fit.rds phylo_fit2.rds rplot.rds

@@ -11,5 +11,4 @@ bintr <- (params
 	|> filter(type == "bintr_cases")
 )
 
-data.frame(
-
+as.Date(

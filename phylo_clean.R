@@ -5,9 +5,9 @@ library(shellpipes)
 dat <- rdsRead()
 
 phylodate <- data.frame(
-	date = as.Date(c("2026-03-25", "2026-04-11"))
-	, suspect_cases = c(1,1)
-	, suspect_death = c(1,1)
+	date = as.Date(c("2026-03-25"))
+	, suspect_cases = c(1)
+	, suspect_death = c(1)
 )
 
 newdat <- bind_rows(phylodate, dat)

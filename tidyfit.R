@@ -1,53 +1,59 @@
-
-library(tidyverse)
+library(tidyverse);theme_set(theme_bw())
 library(bbmle)
 
 library(shellpipes)
 loadEnvironments()
-nsim <- 200
+nsim <- 20
 end <- 100
 
 
-obj <- rdsRead()
-est <- coef(obj$mod)
-cc <- confint(obj$mod,method="quad")
-dd <- (obj$dat
-	|> mutate(date = time + as.Date("2026-04-24"))
+obj <- rdsRead("fit")
+est <- coef(obj)
+cc <- confint(obj,method="quad")
+
+dd <- (rdsRead("clean")
+#	|> mutate(date = time + as.Date("2026-04-24"))
 )
 
 print(dd)
 
-zeroDate <- min(dd$date)
-dd$predInc = predict(obj$mod)
+#zeroDate <- min(dd$date)
+# dd$predInc = predict(obj)
 	
-pp <- pop_pred_samp(obj$mod,n=nsim,PDify=TRUE)
+pp <- (pop_pred_samp(obj,n=nsim,PDify=TRUE)
+)
 
-#pp <- (pp[pp[,1]>7,])
+pp[,1] <- pp[,1] + rnorm(n=nsim, mean=0.25, sd=0.5)
 
-print(pp)
-
-newdat <- data.frame(time=0:end)
+newdat <- data.frame(time=-60:end)
 tempdat <- newdat
 ll <- lapply(1:nrow(pp),function(j){
-tempdat$pred <- predict(obj$mod,newparams=pp[j,],newdata=newdat)
+tempdat$pred <- predict(obj,newparams=pp[j,],newdata=newdat)
 tempdat$seed = j
 return(tempdat)
 }
 )
 
 
+print(ll[[1]])
+
 ddpred <- (bind_rows(ll)
 %>% group_by(time)
-%>% summarise(lwr = quantile(pred,probs=0.025,na.rm=TRUE)
-, med = quantile(pred,probs=0.5,na.rm=TRUE)
-, upr = quantile(pred,probs=0.975,na.rm=TRUE)
+|> mutate(date = time + min(dd$date))
+|> ungroup()
+|> group_by(seed)
+|> mutate(pred = ifelse(is.na(pred),0,pred)
+	, cumInc = cumsum(pred)
+	)
+#%>% summarise(lwr = quantile(pred,probs=0.025,na.rm=TRUE)
+#, med = quantile(pred,probs=0.5,na.rm=TRUE)
+#, upr = quantile(pred,probs=0.975,na.rm=TRUE)
+#)
+#%>% left_join(.,dd)
 )
-%>% mutate(datefill = min(zeroDate,na.rm=TRUE) + time
-, Country = NA
-)
-%>% left_join(.,dd)
-)
-	
+
+
+
 	# ddpred <- (data.frame(time = 0:50)
 	# 	%>% left_join(.,dd,by="time")
 	# 	%>% mutate(
@@ -64,6 +70,20 @@ print(ddpred$datefill)
 print(ddpred$predInc)
 
 print(ddpred)
+
+gg <- (ggplot(ddpred,aes(x=date, y=pred))
+	+ geom_line(aes(group=seed),alpha=0.1)
+	+ geom_point(data=dd,aes(date,y=Inc))
+)
+
+print(gg)
+gg2 <- (ggplot(ddpred,aes(x=date, y=cumInc))
+	+ geom_line(aes(group=seed),alpha=0.1)
+	+ geom_point(data=dd,aes(date,y=suspect_cases))
+)
+
+print(gg2)
+
 
 rdsSave(ddpred)
 
