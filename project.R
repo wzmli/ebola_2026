@@ -16,6 +16,8 @@ preds <- (bind_rows(naive, phylo1, phylo2)
 
 print(preds)
 
+csvSave(preds)
+
 gg <- (ggplot(preds,aes(date,pred))
 	+ geom_line(aes(group=interaction(seed,start_date),color=start_date),alpha=0.1)
 	+ geom_point(data=filter(dat,date>as.Date("2026-04-25")),aes(x=date,y=Inc))
