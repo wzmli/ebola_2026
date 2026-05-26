@@ -9,6 +9,7 @@ dat <- rdsRead()
 incdat <- (dat
 	|> mutate(Inc = diff(c(0,suspect_cases))
 		, newDeath = diff(c(0,suspect_death))
+		, cases = diff(c(0,confirmed_cases))
 	)
 )
 

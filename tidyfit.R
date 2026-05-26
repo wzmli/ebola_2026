@@ -3,7 +3,7 @@ library(bbmle)
 
 library(shellpipes)
 loadEnvironments()
-nsim <- 20
+nsim <- 100
 end <- 100
 
 
@@ -23,7 +23,7 @@ print(dd)
 pp <- (pop_pred_samp(obj,n=nsim,PDify=TRUE)
 )
 
-pp[,1] <- pp[,1] + rnorm(n=nsim, mean=0.25, sd=0.5)
+pp[,1] <- pp[,1] 
 
 newdat <- data.frame(time=-60:end)
 tempdat <- newdat

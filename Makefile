@@ -84,7 +84,7 @@ phyloplot2.Rout: tidyfit.R phylo_fit2.rds flexSim.rda phylo_clean2.rds
 rcombo_plot.Rout: rcombo_plot.R phylo_fit.rds phylo_fit2.rds rplot.rds
 	$(pipeR)
 
-project.Rout: project.R rcombo_plot.rds phylo_dates.rds
+project.Rout: project.R tidyfit.rds phyloplot.rds phyloplot2.rds phylo_clean.rds
 	$(pipeR)
 
 ######################################################################
