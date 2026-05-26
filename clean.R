@@ -16,8 +16,13 @@ longdat <- (incdat
 	|> pivot_longer(!date, names_to ="type", values_to="value")
 )
 
-print(ggplot(longdat, aes(date,value))
+print(longdat)
+
+print(ggplot())
+
+print(gg <- ggplot(longdat, aes(date,value))
 	+ geom_point()
+	+ geom_line()
 	+ facet_wrap(~type,scale="free")
 )
 
