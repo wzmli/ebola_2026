@@ -20,7 +20,7 @@ fitdf <- (rdsRead()
 	|> mutate(NULL
 		, time = as.numeric(time-min(time))
 		, Inc = round(Inc) ## Do I really need this?!?
-		, Inc = ifelse(Inc == 0,1,Inc)
+		## , Inc = ifelse(Inc == 0,1,Inc)
 	)
 )
 
