@@ -1,6 +1,7 @@
 library(tidyverse);theme_set(theme_bw())
 library(shellpipes)
-startGraphics(width=3,height=5)
+library(cowplot)
+startGraphics(width=6,height=5)
 
 naive <- rdsRead("tidyfit.rds") |> mutate(start_date = as.Date("2026-04-25"))
 phylo1 <- rdsRead("phyloplot.rds") |> mutate(start_date = as.Date("2026-03-25"))
@@ -27,7 +28,6 @@ gg <- (ggplot(preds,aes(date,pred))
 	+ xlim(as.Date(c(NA,as.Date("2026-07-01"))))
 )
 
-print(gg)
 
 gg2 <- (ggplot(preds,aes(date,cumInc))
 	+ geom_line(aes(group=interaction(seed,start_date),color=start_date),alpha=0.1)
@@ -38,4 +38,6 @@ gg2 <- (ggplot(preds,aes(date,cumInc))
 	+ xlim(as.Date(c(NA,as.Date("2026-07-01"))))
 )
 
-print(gg2)
+comboplot <- (plot_grid(gg,gg2,nrow=1))
+
+print(comboplot)

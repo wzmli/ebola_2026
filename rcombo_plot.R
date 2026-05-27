@@ -31,8 +31,8 @@ gg <- (ggplot(filter(combodf,type == "bintr_cases"), aes(x=start_date,y=r))
 #	+ geom_hline(aes(yintercept=0.22),color="red")
 	+ geom_rect(xmin = as.Date("2026-03-15")
 		,xmax=as.Date("2026-05-01")
-		,ymin=0.053
-		,ymax=0.085
+		,ymin=0.011
+		,ymax=0.127
 		, alpha=0.1
 		)
 	+ geom_rect(xmin = as.Date("2026-03-15")
