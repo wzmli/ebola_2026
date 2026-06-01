@@ -11,7 +11,7 @@ vim_session:
 
 ### Makestuff
 
-Sources += Makefile $(wildcard *.R) data.csv README.md who3.csv
+Sources += Makefile $(wildcard *.R) data.csv README.md drc_sitrep.csv
 
 Ignore += makestuff
 msrepo = https://github.com/dushoff
