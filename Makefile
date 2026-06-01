@@ -33,7 +33,7 @@ bintr:
 ## who2.csv
 ## who3.csv
 
-read.Rout: read.R who3.csv
+read.Rout: read.R drc_sitrep.csv
 	$(pipeR)
 
 clean.Rout: clean.R read.rds
