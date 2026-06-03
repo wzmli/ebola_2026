@@ -39,7 +39,7 @@ gg2 <- (ggplot(preds,aes(date,cumInc))
 	+ facet_wrap(~start_date,nrow=1)
 	+ theme(legend.position="none")
 	+ ylab("Cumulative Suspect Cases")
-	+ xlim(as.Date(c(NA,as.Date("2026-07-01"))))
+	+ xlim(as.Date(c(NA,as.Date("2026-06-07"))))
 	+ xlab("Date")
 )
 

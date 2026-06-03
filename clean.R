@@ -3,6 +3,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2);theme_set(theme_bw())
 library(shellpipes)
+startGraphics(width=6,height=5)
 
 dat <- rdsRead()
 
@@ -15,14 +16,19 @@ incdat <- (dat
 
 longdat <- (incdat
 	|> pivot_longer(!date, names_to ="type", values_to="value")
+	|> filter(date > as.Date("2026-05-01"))
 )
 
 print(longdat)
 
 print(gg <- ggplot(longdat, aes(date,value))
 	+ geom_point()
-	+ geom_line()
 	+ facet_wrap(~type,scale="free")
+)
+
+print(gg %+% filter(longdat,type %in% c("suspect_cases","confirmed_cases","suspect_death","confirmed_death"))
+	+ ylab("Count")
+	+ geom_vline(aes(xintercept=as.Date("2026-05-28")),linetype="dotted")
 )
 
 rdsSave(incdat)
