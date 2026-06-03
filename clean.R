@@ -3,7 +3,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2);theme_set(theme_bw())
 library(shellpipes)
-startGraphics(width=6,height=5)
+startGraphics(width=12,height=8)
 
 dat <- rdsRead()
 
@@ -17,6 +17,9 @@ incdat <- (dat
 longdat <- (incdat
 	|> pivot_longer(!date, names_to ="type", values_to="value")
 	|> filter(date > as.Date("2026-05-01"))
+	|> group_by(type)
+	|> mutate(max = max(value,na.rm=TRUE))
+	|> mutate(adj = ifelse(max > 300, 30, 5))
 )
 
 print(longdat)
@@ -28,6 +31,7 @@ print(gg <- ggplot(longdat, aes(date,value))
 
 print(gg %+% filter(longdat,type %in% c("suspect_cases","confirmed_cases","suspect_death","confirmed_death"))
 	+ ylab("Count")
+	+ geom_text(aes(x=date,y=value,label=value,nudge_y=adj))
 	+ geom_vline(aes(xintercept=as.Date("2026-05-28")),linetype="dotted")
 )
 
