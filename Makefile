@@ -48,6 +48,9 @@ expfit.Rout: expfit.R clean.rds
 fit.Rout: fit.R clean.rds flexSim.rda
 	$(pipeR)
 
+doubling.Rout: doubling.R doubling.csv
+	$(pipeR)
+
 fit_death.Rout: fit_death.R clean.rds flexSim.rda
 	$(pipeR)
 
