@@ -10,6 +10,7 @@ print(dat |> select(date,doubling_s,doubling_c), n=Inf)
 
 fitdat <- (dat
 	|> filter(date > as.Date("2026-05-15"))
+	|> filter(date < as.Date("2026-07-11"))
 	|> transmute(time = as.numeric(date - min(date))
 		, cinc = confirmed_cases
 		, date
@@ -35,8 +36,8 @@ fitdat$difftime.se <- pp$se.fit
 
 newdat2 <- (fitdat
 	|> mutate(dt = time - difftime
-		, dt.lwr = time - difftime - 2*difftime.se
-		, dt.upr = time - difftime + 2*difftime.se
+		, dt.lwr = time - difftime - 1.96*difftime.se
+		, dt.upr = time - difftime + 1.96*difftime.se
 	)
 )
 
