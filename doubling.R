@@ -1,28 +1,53 @@
 library(tidyverse);theme_set(theme_bw())
+library(zoo)
 library(cowplot)
 library(shellpipes)
-startGraphics(width=6,height=4)
+startGraphics(width=3,height=4)
 
 dat <- csvRead() |> filter(date > as.Date("2026-05-01"))
 
 print(dat |> select(date,doubling_s,doubling_c), n=Inf)
 
-gg1 <- (ggplot(dat,aes(x=date))
-	+ geom_point(aes(y=suspect_cases),color="red")
-	+ geom_point(aes(y=confirmed_cases),color="blue")
-	+ ylab("Cumulative cases")
-	+ ggtitle("Cumulative cases")
+fitdat <- (dat
+	|> filter(date > as.Date("2026-05-15"))
+	|> transmute(time = as.numeric(date - min(date))
+		, cinc = confirmed_cases
+		, date
+	)
 )
 
-print(gg1)
+print(fitdat)
 
-gg2 <- (ggplot(dat,aes(x=date))
-	+ geom_line(aes(y=doubling_s),color="red")
-	+ geom_line(aes(y=doubling_c),color="blue")
-	+ ylab("Doubling time")
-	+ ggtitle("Doubling time")
+mod <- (loess(time ~ cinc, data=fitdat, span=0.75))
+
+print(summary(mod))
+
+newdat <- (fitdat
+	|> transmute(cinc = cinc/2)
 )
 
-print(gg2)
+pp <- predict(mod,newdata=newdat,se=TRUE)
 
-print(plot_grid(gg1,gg2,rows=1))
+print(pp)
+
+fitdat$difftime <- pp$fit
+fitdat$difftime.se <- pp$se.fit
+
+newdat2 <- (fitdat
+	|> mutate(dt = time - difftime
+		, dt.lwr = time - difftime - 2*difftime.se
+		, dt.upr = time - difftime + 2*difftime.se
+	)
+)
+
+gg <- (ggplot(newdat2, aes(date))
+	+ geom_line(aes(y=dt))
+	+ geom_ribbon(aes(ymin=dt.lwr,ymax=dt.upr),alpha=0.2)
+	+ xlim(c(as.Date("2026-06-01"),as.Date("2026-07-16")))
+	+ ylab("Doubling Time (days)")
+	+ xlab("Date")
+)
+
+print(gg)
+
+
