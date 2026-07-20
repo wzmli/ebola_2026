@@ -10,7 +10,7 @@ print(dat |> select(date,doubling_s,doubling_c), n=Inf)
 
 fitdat <- (dat
 	|> filter(date > as.Date("2026-05-15"))
-	|> filter(date < as.Date("2026-07-11"))
+#	|> filter(date < as.Date("2026-07-11"))
 	|> transmute(time = as.numeric(date - min(date))
 		, cinc = confirmed_cases
 		, date
@@ -44,7 +44,7 @@ newdat2 <- (fitdat
 gg <- (ggplot(newdat2, aes(date))
 	+ geom_line(aes(y=dt))
 	+ geom_ribbon(aes(ymin=dt.lwr,ymax=dt.upr),alpha=0.2)
-	+ xlim(c(as.Date("2026-06-01"),as.Date("2026-07-16")))
+	+ xlim(c(as.Date("2026-06-01"),as.Date("2026-07-20")))
 	+ ylab("Doubling Time (days)")
 	+ xlab("Date")
 )
