@@ -41,6 +41,8 @@ newdat2 <- (fitdat
 	)
 )
 
+print(tail(newdat2))
+
 gg <- (ggplot(newdat2, aes(date))
 	+ geom_line(aes(y=dt))
 	+ geom_ribbon(aes(ymin=dt.lwr,ymax=dt.upr),alpha=0.2)
