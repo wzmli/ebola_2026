@@ -2,7 +2,7 @@ library(tidyverse);theme_set(theme_bw())
 library(zoo)
 library(cowplot)
 library(shellpipes)
-startGraphics(width=3,height=4)
+startGraphics(width=4,height=3)
 
 dat <- csvRead() |> filter(date > as.Date("2026-05-01"))
 
