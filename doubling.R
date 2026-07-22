@@ -6,6 +6,12 @@ startGraphics(width=4,height=3)
 
 dat <- csvRead() |> filter(date > as.Date("2026-05-01"))
 
+phydat <- data.frame(date = as.Date("2026-06-23")
+	, med = 11.5
+	, lwr = 7
+	, upr = 17
+)
+
 print(dat |> select(date,doubling_s,doubling_c), n=Inf)
 
 fitdat <- (dat
@@ -46,6 +52,7 @@ print(tail(newdat2))
 gg <- (ggplot(newdat2, aes(date))
 	+ geom_line(aes(y=dt))
 	+ geom_ribbon(aes(ymin=dt.lwr,ymax=dt.upr),alpha=0.2)
+	+ geom_pointrange(data=phydat,aes(x=date,y=med,ymin=lwr,ymax=upr))
 	+ xlim(c(as.Date("2026-06-01"),as.Date("2026-07-20")))
 	+ ylab("Doubling Time (days)")
 	+ xlab("Date")
