@@ -39,6 +39,9 @@ read.Rout: read.R drc_sitrep.csv
 clean.Rout: clean.R read.rds
 	$(pipeR)
 
+correction.Rout: correction.R clean.rds
+	$(pipeR)
+
 flexSim.Rout: bintr/flexSim.R
 	$(pipeR)
 
