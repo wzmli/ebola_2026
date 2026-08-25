@@ -11,7 +11,7 @@ vim_session:
 
 ### Makestuff
 
-Sources += Makefile $(wildcard *.R) data.csv README.md drc_sitrep.csv
+Sources += Makefile $(wildcard *.R) data.csv README.md drc_sitrep.csv pt_sitrep.csv
 
 Ignore += makestuff
 msrepo = https://github.com/dushoff
@@ -91,6 +91,12 @@ rcombo_plot.Rout: rcombo_plot.R phylo_fit.rds phylo_fit2.rds rplot.rds
 	$(pipeR)
 
 project.Rout: project.R tidyfit.rds phyloplot.rds phyloplot2.rds phylo_clean.rds
+	$(pipeR)
+
+ptplot.Rout: ptplot.R pt_sitrep.csv
+	$(pipeR)
+
+pt_doubling.Rout: pt_doubling.R ptplot.rds
 	$(pipeR)
 
 ######################################################################
