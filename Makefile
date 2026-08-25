@@ -99,6 +99,9 @@ ptplot.Rout: ptplot.R pt_sitrep.csv
 pt_doubling.Rout: pt_doubling.R ptplot.rds
 	$(pipeR)
 
+pt_cfr.Rout: pt_cfr.R ptplot.rds
+	$(pipeR)
+
 ######################################################################
 
 ## ln -s ../makestuff . ## Do this first if you want a linked makestuff
