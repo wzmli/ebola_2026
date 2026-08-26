@@ -18,7 +18,9 @@ gg <- (ggplot(dat,aes(date,cfr,color=province))
 	+ scale_size_area()
 	+ geom_line()
 #	+ facet_wrap(~province)
+	+ theme(legend.position="bottom")
 )
 
 print(gg)
 
+print(gg + facet_wrap(~province))
