@@ -1,7 +1,8 @@
 library(tidyverse);theme_set(theme_bw())
 library(zoo)
 library(shellpipes)
-startGraphics(width=5, height=3)
+library(cowplot)
+startGraphics(width=8, height=6)
 
 dat <- (csvRead()
 	|> arrange(province,date)
@@ -12,52 +13,46 @@ dat <- (csvRead()
 		, new_cases = diff(c(0,cases))
 		, new_deaths = diff(c(0,deaths))
 	)
-	|> mutate(new_cases = rollmean(new_cases,k=7,fill=NA,align="right",na.rm=TRUE)
+	|> mutate(NULL
+#		, new_cases = rollmean(new_cases,k=7,fill=NA,align="right",na.rm=TRUE)
+#		, new_deaths = rollmean(new_deaths,k=7,fill=NA,align="right",na.rm=TRUE)
 	)
 	|> ungroup()
 	|> group_by(date)
 	|> ungroup()
+	|> filter(province != "Sud-Kivu")
 )
 
 print(dat, n=Inf)
 
-dat2 <- (dat
-	|> mutate(NULL
-		, province2 = ifelse(province == "Ituri","Ituri","Other")
-		, province2 = ifelse(province == "Nord-Kivu", "Nord-Kivu",province2)
-		)
-	|> group_by(date,province)
-	|> mutate(new_cases2 = sum(new_cases))
-)
-
 gg <- (ggplot(dat, aes(x=date,y=new_cases,fill=province))
 #	+ geom_area(position="fill")
 	+ geom_area(position="stack")
+	+ scale_fill_manual(values=c("black","red","blue","orange","purple","green"))
 )
 print(gg)
 
-gg2 <- (ggplot(dat2, aes(x=date,y=new_cases2,fill=province))
-	+ geom_area(position="stack")
-#	+ xlim(c(as.Date("2026-08-01"),NA))
-)
-
-print(gg2)
-gg2 <- (ggplot(dat2, aes(x=date,y=new_cases2,fill=province))
+gg2 <- (ggplot(dat, aes(x=date,y=new_cases,fill=province))
 	+ geom_area(position="fill")
-#	+ xlim(c(as.Date("2026-08-01"),NA))
+	+ scale_fill_manual(values=c("black","red","blue","orange","purple","green"))
 )
 
 print(gg2)
 
-gg2 <- (ggplot(dat2, aes(x=date,y=new_cases2,fill=province2))
+ggd <- (ggplot(dat, aes(x=date,y=new_deaths,fill=province))
+#	+ geom_area(position="fill")
 	+ geom_area(position="stack")
-#	+ xlim(c(as.Date("2026-08-01"),NA))
+	+ scale_fill_manual(values=c("black","red","blue","orange","purple","green"))
 )
+print(ggd)
 
-print(gg2)
-gg2 <- (ggplot(dat2, aes(x=date,y=new_cases2,fill=province2))
+ggd2 <- (ggplot(dat, aes(x=date,y=new_deaths,fill=province))
 	+ geom_area(position="fill")
-#	+ xlim(c(as.Date("2026-08-01"),NA))
+	+ scale_fill_manual(values=c("black","red","blue","orange","purple","green"))
 )
 
-print(gg2)
+print(ggd2)
+
+comboplot <- plot_grid(gg,ggd,gg2,ggd2,nrow=2)
+
+print(comboplot)
