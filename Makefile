@@ -96,6 +96,9 @@ project.Rout: project.R tidyfit.rds phyloplot.rds phyloplot2.rds phylo_clean.rds
 ptplot.Rout: ptplot.R pt_sitrep.csv
 	$(pipeR)
 
+ptplot2.Rout: ptplot2.R pt_sitrep.csv
+	$(pipeR)
+
 pt_doubling.Rout: pt_doubling.R ptplot.rds
 	$(pipeR)
 

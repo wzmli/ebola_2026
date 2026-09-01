@@ -138,14 +138,12 @@ date, province, cases, deaths
 2026-07-22, Haut-Uele, 27, 15
 2026-07-21, Ituri, 2248, 864
 2026-07-21, Nord-Kivu, 259, 152
-2026-07-21, Haut-Uele, 21, 12
 2026-07-20, Ituri, 2202, 838
 2026-07-20, Nord-Kivu, 247, 146
 2026-07-19, Ituri, 2160, 811
 2026-07-19, Nord-Kivu, 239, 141
 2026-07-18, Ituri, 2090, 776
 2026-07-18, Nord-Kivu, 230, 139
-2026-07-18, Haut-Uele, 16, 10
 2026-07-17, Ituri, 2023, 745
 2026-07-17, Nord-Kivu, 214, 130
 2026-07-17, Haut-Uele, 22, 13
@@ -226,7 +224,6 @@ date, province, cases, deaths
 2026-06-11, Ituri, 646, 114
 2026-06-11, Nord-Kivu, 40, 24
 2026-06-10, Ituri, 629, 109
-2026-06-10, Nord-Kivu, 44, 26
 2026-06-09, Ituri, 600, 104
 2026-06-08, Ituri, 563, 92
 2026-06-08, Nord-Kivu, 32, 22
@@ -251,8 +248,6 @@ date, province, cases, deaths
 2026-05-27, Nord-Kivu, 14, NA
 2026-05-26, Ituri, 110, NA
 2026-05-26, Nord-Kivu, 10, NA
-2026-05-25, Nord-Kivu, 11, NA
-2026-05-24, Nord-Kivu, 10, NA
 2026-05-24, Ituri, 94, NA
 2026-05-24, Nord-Kivu, 6, NA
 2026-05-22, Ituri, 82, NA
